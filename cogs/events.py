@@ -12,10 +12,7 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
 
-        if message.author == self.bot.user:
-            return
-        if message.author.bot: 
-            return
+        if message.author == self.bot.user and message.author.bot: return
 
         if message.channel.id != 970437396342665266:
             await message.channel.send(":warning: UNDER DEVELOPMENT :warning:... i can only be accessed in <#970437396342665266> at this time, thank you for understanding")

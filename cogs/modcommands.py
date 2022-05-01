@@ -1,41 +1,50 @@
 from discord.ext import commands
 import discord
 from datetime import datetime
+from . import utils
 
 class ModCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    def embedDetails(self, ctx, title: str, desc: str, color, guild_icon, timestamp, footer):
-        embed = discord.Embed(
-            title=title,
-            description=desc,
-            colour=color,
-        )
-        embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
-        embed.set_color(color)
-        embed.set_thumbnail(guild_icon)
-        embed.timestamp = timestamp
-        embed.set_footer(text=footer)
-        ctx.send(embed=embed)
+    # def embedDetails(self, ctx, title: str, desc: str, color, guild_icon, timestamp, footer):
+    #     embed = discord.Embed(
+    #         title=title,
+    #         description=desc,
+    #         colour=color,
+    #     )
+    #     embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
+    #     embed.set_color(color)
+    #     embed.set_thumbnail(guild_icon)
+    #     embed.timestamp = timestamp
+    #     embed.set_footer(text=footer)
+    #     ctx.send(embed=embed)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def clear():
-        pass
+    async def clear(self, ctx, amount=None):
+        if not amount:
+            utils.embedDetails("Args Error", 
+            "``Usage: .clear <amount>``",
+            discord.Colour.black(),
+            ctx.guild.icon_url,
+            datetime.utcnow(),
+            "WockyFX Bot - Args Error")
+        else:
+            await ctx.channel.purge(limit=amount)
 
     @clear.error
     async def clear_error(self, ctx, error):
         if isinstance(error, commands.MissingPermssions):
-            self.embedDetails("Permissions Error!", 
+            utils.embedDetails("Permissions Error!", 
             "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
             discord.Colour.black(),
             ctx.guild.icon_url,
             datetime.utcnow(),
             "WockyFX Bot - Permissions Error")
         elif isinstance(error, commands.CommandOnCooldown):
-            self.embedDetails("Cooldown Error!", 
+            utils.embedDetails("Cooldown Error!", 
             "Cooldown remaining: ``{.2f}``".format(error.retry_after),
             discord.Colour.black(),
             ctx.guild.icon_url,
