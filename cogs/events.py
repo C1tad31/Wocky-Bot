@@ -15,6 +15,9 @@ class Events(commands.Cog):
 
         if message.author == self.bot.user and message.author.bot: return
 
+        if message.author.id == 954454712273490002:
+            await message.delete()
+
         # if message.channel.id != 970437396342665266:
         #     await message.channel.send(":warning: UNDER DEVELOPMENT :warning:... i can only be accessed in <#970437396342665266> at this time, thank you for understanding")
     

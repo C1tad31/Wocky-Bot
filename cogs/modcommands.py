@@ -7,19 +7,6 @@ class ModCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # def embedDetails(self, ctx, title: str, desc: str, color, guild_icon, timestamp, footer):
-    #     embed = discord.Embed(
-    #         title=title,
-    #         description=desc,
-    #         colour=color,
-    #     )
-    #     embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
-    #     embed.set_color(color)
-    #     embed.set_thumbnail(guild_icon)
-    #     embed.timestamp = timestamp
-    #     embed.set_footer(text=footer)
-    #     ctx.send(embed=embed)
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     @commands.cooldown(1, 10, commands.BucketType.user)

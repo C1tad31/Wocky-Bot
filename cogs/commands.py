@@ -22,6 +22,14 @@ class Commands(commands.Cog):
     async def user_info(self):
         pass
 
+    @commands.command()
+    @commands.has_role("Admin")
+    async def gp(self, ctx, role: discord.Role, time):
+        await ctx.message.delete()
+        while int(time) <= 100:
+            time.sleep(1)
+            await ctx.send(role.mention, delete_after=1)
+
 
 
 def setup(bot):
