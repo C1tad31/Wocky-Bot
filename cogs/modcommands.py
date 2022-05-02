@@ -25,7 +25,8 @@ class ModCommands(commands.Cog):
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def clear(self, ctx, amount=None):
         if not amount:
-            utils.embedDetails("Args Error", 
+            utils.embedDetails(ctx,
+            "Args Error", 
             "``Usage: .clear <amount>``",
             discord.Colour.black(),
             ctx.guild.icon_url,
@@ -67,14 +68,16 @@ class ModCommands(commands.Cog):
     @kick.error
     async def kick_error(self, ctx, error):
         if isinstance(error, commands.MissingPermssions):
-            self.embedDetails("Permissions Error!", 
+            utils.embedDetails(ctx,
+            "Permissions Error!", 
             "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
             discord.Colour.black(),
             ctx.guild.icon_url,
             datetime.utcnow(),
             "WockyFX Bot - Permissions Error")
         elif isinstance(error, commands.CommandOnCooldown):
-            self.embedDetails("Cooldown Error!", 
+            utils.embedDetails(ctx, 
+            "Cooldown Error!", 
             "Cooldown remaining: ``{.2f}``".format(error.retry_after),
             discord.Colour.black(),
             ctx.guild.icon_url,
