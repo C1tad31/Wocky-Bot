@@ -9,32 +9,32 @@ class ModCommands(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    # @commands.cooldown(1, 10, commands.BucketType.user)
+    @commands.cooldown(1, 10, commands.BucketType.user)
     async def clear(self, ctx, amount=5):
         await ctx.channel.purge(limit=amount)
 
-    # @clear.error
-    # async def clear_error(self, ctx, error):
-    #     if isinstance(error, commands.MissingPermissions):
-    #         utils.embedDetails(ctx,
-    #         "Permissions Error!", 
-    #         "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
-    #         discord.Colour.black(),
-    #         ctx.guild.icon_url,
-    #         datetime.utcnow(),
-    #         "WockyFX Bot - Permissions Error")
-    #     elif isinstance(error, commands.CommandOnCooldown):
-    #         utils.embedDetails(ctx,
-    #         "Cooldown Error!", 
-    #         "Cooldown remaining: ``{.2f}``".format(error.retry_after),
-    #         discord.Colour.black(),
-    #         ctx.guild.icon_url,
-    #         datetime.utcnow(),
-    #         "WockyFX Bot - Cooldown Error")
+    @clear.error
+    async def clear_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            utils.embedDetails(ctx,
+            "Permissions Error!", 
+            "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
+            discord.Colour.black(),
+            ctx.guild.icon_url,
+            datetime.utcnow(),
+            "WockyFX Bot - Permissions Error")
+        elif isinstance(error, commands.CommandOnCooldown):
+            utils.embedDetails(ctx,
+            "Cooldown Error!", 
+            "Cooldown remaining: ``{.2f}``".format(error.retry_after),
+            discord.Colour.black(),
+            ctx.guild.icon_url,
+            datetime.utcnow(),
+            "WockyFX Bot - Cooldown Error")
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
-    # @commands.cooldown(1, 10, commands.BucketType.user)
+    @commands.cooldown(1, 10, commands.BucketType.user)
     async def kick(self, ctx, member: discord.Member = None, *, reason = None):
         if not member:
             await ctx.send("Please specify a valid member to kick!")
@@ -43,24 +43,24 @@ class ModCommands(commands.Cog):
         else:
             await member.kick(reason=reason)
 
-    # @kick.error
-    # async def kick_error(self, ctx, error):
-    #     if isinstance(error, commands.MissingPermssions):
-    #         utils.embedDetails(ctx,
-    #         "Permissions Error!", 
-    #         "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
-    #         discord.Colour.black(),
-    #         ctx.guild.icon_url,
-    #         datetime.utcnow(),
-    #         "WockyFX Bot - Permissions Error")
-    #     elif isinstance(error, commands.CommandOnCooldown):
-    #         utils.embedDetails(ctx, 
-    #         "Cooldown Error!", 
-    #         "Cooldown remaining: ``{.2f}``".format(error.retry_after),
-    #         discord.Colour.black(),
-    #         ctx.guild.icon_url,
-    #         datetime.utcnow(),
-    #         "WockyFX Bot - Cooldown Error")
+    @kick.error
+    async def kick_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermssions):
+            utils.embedDetails(ctx,
+            "Permissions Error!", 
+            "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
+            discord.Colour.black(),
+            ctx.guild.icon_url,
+            datetime.utcnow(),
+            "WockyFX Bot - Permissions Error")
+        elif isinstance(error, commands.CommandOnCooldown):
+            utils.embedDetails(ctx, 
+            "Cooldown Error!", 
+            "Cooldown remaining: ``{.2f}``".format(error.retry_after),
+            discord.Colour.black(),
+            ctx.guild.icon_url,
+            datetime.utcnow(),
+            "WockyFX Bot - Cooldown Error")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
