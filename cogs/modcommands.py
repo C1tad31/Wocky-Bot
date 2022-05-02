@@ -24,7 +24,7 @@ class ModCommands(commands.Cog):
 
     @clear.error
     async def clear_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermssions):
+        if isinstance(error, commands.MissingPermissions):
             utils.embedDetails(ctx,
             "Permissions Error!", 
             "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
@@ -86,6 +86,13 @@ class ModCommands(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name="Member")
         await ctx.channel.set_permissions(role, send_messages=True)
         await ctx.send("{} ***has been unlocked.***".format(ctx.channel.mention))
+
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def add_user(self, ctx, member: discord.Member):
+        # utils.create_table()
+        utils.create_user(member.name, member.id)
+        await ctx.send("{}, has been added to the database!".format(member.mention))
             
 
 
