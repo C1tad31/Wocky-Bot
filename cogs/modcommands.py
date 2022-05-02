@@ -37,14 +37,16 @@ class ModCommands(commands.Cog):
     @clear.error
     async def clear_error(self, ctx, error):
         if isinstance(error, commands.MissingPermssions):
-            utils.embedDetails("Permissions Error!", 
+            utils.embedDetails(ctx,
+            "Permissions Error!", 
             "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
             discord.Colour.black(),
             ctx.guild.icon_url,
             datetime.utcnow(),
             "WockyFX Bot - Permissions Error")
         elif isinstance(error, commands.CommandOnCooldown):
-            utils.embedDetails("Cooldown Error!", 
+            utils.embedDetails(ctx,
+            "Cooldown Error!", 
             "Cooldown remaining: ``{.2f}``".format(error.retry_after),
             discord.Colour.black(),
             ctx.guild.icon_url,
@@ -78,6 +80,22 @@ class ModCommands(commands.Cog):
             ctx.guild.icon_url,
             datetime.utcnow(),
             "WockyFX Bot - Cooldown Error")
+
+    @commands.command()
+    @commands.has_permissions(manage_channels=True)
+    async def lockdown(self, ctx):
+        await ctx.message.delete()
+        role = discord.utils.get(ctx.guild.roles, name="Member")
+        await ctx.channel.set_permissions(role, send_messages=False)
+        await ctx.send("{} ***is now in lockdown.***".format(ctx.channel.mention))
+        
+    @commands.command()
+    @commands.has_permissions(manage_channels=True)
+    async def unlock(self, ctx):
+        await ctx.message.delete()
+        role = discord.utils.get(ctx.guild.roles, name="Member")
+        await ctx.channel.set_permissions(role, send_messages=True)
+        await ctx.send("{} ***has been unlocked.***".format(ctx.channel.mention))
             
 
 

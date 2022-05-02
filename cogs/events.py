@@ -1,5 +1,6 @@
 from discord.ext import commands
 import discord
+from . import utils
 
 class Events(commands.Cog):
     def __init__(self, bot):
@@ -14,8 +15,8 @@ class Events(commands.Cog):
 
         if message.author == self.bot.user and message.author.bot: return
 
-        if message.channel.id != 970437396342665266:
-            await message.channel.send(":warning: UNDER DEVELOPMENT :warning:... i can only be accessed in <#970437396342665266> at this time, thank you for understanding")
+        # if message.channel.id != 970437396342665266:
+        #     await message.channel.send(":warning: UNDER DEVELOPMENT :warning:... i can only be accessed in <#970437396342665266> at this time, thank you for understanding")
     
     @commands.Cog.listener()
     async def on_message_delete(self, message):

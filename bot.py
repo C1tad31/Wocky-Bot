@@ -17,6 +17,7 @@ cogs = [
     "cogs.commands",
     "cogs.modcommands",
     "cogs.events",
+    "cogs.bigboicommands",
 ]
 
 for cog in cogs:
