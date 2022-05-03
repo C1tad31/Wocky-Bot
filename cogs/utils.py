@@ -3,18 +3,17 @@ from discord.ext import commands
 import discord
 import sqlite3
 
-def embedDetails(ctx, title: str, desc: str, color, guild_icon, timestamp, footer):
+async def embedDetails(ctx, title, desc, color, guild_icon, timestamp, footer):
     embed = discord.Embed(
         title=title,
         description=desc,
         colour=color,
     )
     embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
-    embed.set_color(color)
-    embed.set_thumbnail(guild_icon)
+    embed.set_thumbnail(url=guild_icon)
     embed.timestamp = timestamp
     embed.set_footer(text=footer)
-    ctx.send(embed=embed)
+    await ctx.send(embed=embed, delete_after=20)
 
 def create_table():
     conn = sqlite3.connect("db/users.db")
@@ -39,8 +38,19 @@ def create_user(username, user_id):
     print("User added to DB!")
     conn.close()
 
-def delete_user():
-    pass
+def delete_user(username, user_id):
+    task = "DELETE * WHERE USERNAME = ? AND USERID = ?"
+    conn = sqlite3.connect("db/users.db")
+    conn.execute(task, (username, user_id))
+    conn.commit()
+    print("User deleted from DB!")
+    conn.close()
 
-def update_user():
-    pass
+def update_user(username, user_id):
+    # TODO: Edit User Sqlite Syntax
+    task = "" 
+    conn = sqlite3.connect("db/users.db")
+    conn.execute(task, (username, user_id))
+    conn.commit()
+    print("User edited in DB!")
+    conn.close()
