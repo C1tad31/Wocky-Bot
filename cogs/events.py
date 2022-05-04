@@ -17,12 +17,6 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
 
-        with open("config/blacklist/words.txt") as bad_words:
-            profain_words = bad_words.readline()
-            if message.clean_content in profain_words:
-                await message.delete()
-                await message.channel.send("That word is not allowed here!", delete_after=1)
-
         if message.author == self.bot.user and message.author.bot: return
 
         await utils.logsEmbeds(message,

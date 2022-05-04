@@ -23,9 +23,16 @@ class ModCommands(commands.Cog):
                                          Color.red(),
                                          ctx.guild.icon_url,
                                          datetime.utcnow(),
-                                         "WockyFX - Args Error")
+                                         "WockyFX - Args Error", 10)
             else:
                 await ctx.channel.purge(limit=int(amount))
+                await utils.embedDetails(ctx,
+                                         "Messages Cleared!",
+                                         "{} messages have been cleared from the chat by: {}".format(amount, ctx.author.mention),
+                                         Color.gold(),
+                                         ctx.guild.icon_url,
+                                         datetime.utcnow(),
+                                         "WockyFX - Clear Messages", 0)
         except Exception as e:
             print(e)
 
@@ -39,7 +46,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Permissions Error")
+                                     "WockyFX Bot - Permissions Error", 10)
         elif isinstance(error, CommandOnCooldown):
             await utils.embedDetails(ctx,
                                      "Cooldown Error!",
@@ -47,7 +54,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Cooldown Error")
+                                     "WockyFX Bot - Cooldown Error", 10)
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
@@ -70,7 +77,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Permissions Error")
+                                     "WockyFX Bot - Permissions Error", 10)
         elif isinstance(error, CommandOnCooldown):
             await utils.embedDetails(ctx,
                                      "Cooldown Error!",
@@ -78,7 +85,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Cooldown Error")
+                                     "WockyFX Bot - Cooldown Error", 10)
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
@@ -102,7 +109,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Permissions Error")
+                                     "WockyFX Bot - Permissions Error", 10)
         elif isinstance(error, CommandOnCooldown):
             await utils.embedDetails(ctx,
                                      "Cooldown Error!",
@@ -110,7 +117,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Cooldown Error")
+                                     "WockyFX Bot - Cooldown Error", 10)
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -123,7 +130,7 @@ class ModCommands(commands.Cog):
             await member.add_role(role)
             await utils.embedDetails(ctx, "Member Muted!",
                                      "{}, has been muted by: {}".format(member.mention, ctx.author.mention),
-                                     Color.gold(), ctx.guild.icon_url, datetime.utcnow(), "WockyFX - Mute")
+                                     Color.gold(), ctx.guild.icon_url, datetime.utcnow(), "WockyFX - Mute", 0)
 
     # Error Handling for muting  users
     @mute.error
@@ -135,7 +142,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Permissions Error")
+                                     "WockyFX Bot - Permissions Error", 10)
         elif isinstance(error, CommandOnCooldown):
             await utils.embedDetails(ctx,
                                      "Cooldown Error!",
@@ -143,7 +150,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Cooldown Error")
+                                     "WockyFX Bot - Cooldown Error", 10)
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -165,7 +172,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Permissions Error")
+                                     "WockyFX Bot - Permissions Error", 10)
         elif isinstance(error, CommandOnCooldown):
             await utils.embedDetails(ctx,
                                      "Cooldown Error!",
@@ -173,7 +180,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Cooldown Error")
+                                     "WockyFX Bot - Cooldown Error", 10)
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -197,7 +204,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Permissions Error")
+                                     "WockyFX Bot - Permissions Error", 10)
         elif isinstance(error, CommandOnCooldown):
             await utils.embedDetails(ctx,
                                      "Cooldown Error!",
@@ -205,7 +212,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Cooldown Error")
+                                     "WockyFX Bot - Cooldown Error", 10)
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -229,7 +236,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Permissions Error")
+                                     "WockyFX Bot - Permissions Error", 10)
         elif isinstance(error, CommandOnCooldown):
             await utils.embedDetails(ctx,
                                      "Cooldown Error!",
@@ -237,7 +244,7 @@ class ModCommands(commands.Cog):
                                      Color.gold(),
                                      ctx.guild.icon_url,
                                      datetime.utcnow(),
-                                     "WockyFX Bot - Cooldown Error")
+                                     "WockyFX Bot - Cooldown Error", 10)
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)

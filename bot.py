@@ -15,9 +15,11 @@ cogs = [
     "cogs.commands",
     "cogs.modcommands",
     "cogs.events",
+    "cogs.db.users",
 ]
 
 for cog in cogs:
     wockyfx.load_extension(cog)
+    print("loaded {}".format(cog))
 
 wockyfx.run(TOKEN, reconnect=True)
