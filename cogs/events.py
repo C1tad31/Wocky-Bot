@@ -25,9 +25,6 @@ class Events(commands.Cog):
 
         if message.author == self.bot.user and message.author.bot: return
 
-        if message.author.id == 954454712273490002:
-            await message.delete()
-
         await utils.logsEmbeds(message,
                                "logs",
                                "Message Sent by: {}".format(message.author.name),
