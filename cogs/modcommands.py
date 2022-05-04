@@ -6,6 +6,7 @@ from discord.ext.commands import MissingPermissions, CommandOnCooldown
 # imports utils from the parent dir for required function use
 from . import utils
 
+
 class ModCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -16,13 +17,13 @@ class ModCommands(commands.Cog):
     async def clear(self, ctx, amount=None):
         try:
             if not amount:
-                await utils.embedDetails(ctx, 
-                "Args Error",
-                "Usage: .clear <amount>",
-                Color.red(),
-                ctx.guild.icon_url,
-                datetime.utcnow(),
-                "WockyFX - Args Error")
+                await utils.embedDetails(ctx,
+                                         "Args Error",
+                                         "Usage: .clear <amount>",
+                                         Color.red(),
+                                         ctx.guild.icon_url,
+                                         datetime.utcnow(),
+                                         "WockyFX - Args Error")
             else:
                 await ctx.channel.purge(limit=int(amount))
         except Exception as e:
@@ -33,25 +34,25 @@ class ModCommands(commands.Cog):
     async def clear_error(self, ctx, error):
         if isinstance(error, MissingPermissions):
             await utils.embedDetails(ctx,
-            "Permissions Error!", 
-            "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Permissions Error")
+                                     "Permissions Error!",
+                                     "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Permissions Error")
         elif isinstance(error, CommandOnCooldown):
             await utils.embedDetails(ctx,
-            "Cooldown Error!", 
-            "Cooldown remaining: ``{:.2f} s``".format(error.retry_after),
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Cooldown Error")
+                                     "Cooldown Error!",
+                                     "Cooldown remaining: ``{:.2f} s``".format(error.retry_after),
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Cooldown Error")
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def kick(self, ctx, member: discord.Member = None, *, reason = None):
+    async def kick(self, ctx, member: discord.Member = None, *, reason=None):
         if not member:
             await ctx.send("Please specify a valid member to kick!")
         elif not reason:
@@ -64,25 +65,25 @@ class ModCommands(commands.Cog):
     async def kick_error(self, ctx, error):
         if isinstance(error, MissingPermissions):
             await utils.embedDetails(ctx,
-            "Permissions Error!", 
-            "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Permissions Error")
+                                     "Permissions Error!",
+                                     "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Permissions Error")
         elif isinstance(error, CommandOnCooldown):
-            await utils.embedDetails(ctx, 
-            "Cooldown Error!", 
-            "Cooldown remaining: ``{.2f}``".format(error.retry_after),
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Cooldown Error")
+            await utils.embedDetails(ctx,
+                                     "Cooldown Error!",
+                                     "Cooldown remaining: ``{.2f}``".format(error.retry_after),
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Cooldown Error")
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def ban(self, ctx, member: discord.Member=None, *, reason):
+    async def ban(self, ctx, member: discord.Member = None, *, reason):
         if not member:
             pass
         elif not reason:
@@ -96,72 +97,83 @@ class ModCommands(commands.Cog):
     async def ban_error(self, ctx, error):
         if isinstance(error, MissingPermissions):
             await utils.embedDetails(ctx,
-            "Permissions Error!", 
-            "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Permissions Error")
+                                     "Permissions Error!",
+                                     "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Permissions Error")
         elif isinstance(error, CommandOnCooldown):
-            await utils.embedDetails(ctx, 
-            "Cooldown Error!", 
-            "Cooldown remaining: ``{.2f}``".format(error.retry_after),
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Cooldown Error")
+            await utils.embedDetails(ctx,
+                                     "Cooldown Error!",
+                                     "Cooldown remaining: ``{.2f}``".format(error.retry_after),
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Cooldown Error")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def mute(self, ctx, member: discord.Member = None, *, reason):
-        pass
+    async def mute(self, ctx, member: discord.Member = None):
+        if not member:
+            pass
+        else:
+            role = discord.utils.get(ctx.guild.roles, name='Muted')
+            await member.add_role(role)
+            await utils.embedDetails(ctx, "Member Muted!",
+                                     "{}, has been muted by: {}".format(member.mention, ctx.author.mention),
+                                     Color.gold(), ctx.guild.icon_url, datetime.utcnow(), "WockyFX - Mute")
 
     # Error Handling for muting  users
     @mute.error
     async def mute_error(self, ctx, error):
         if isinstance(error, MissingPermissions):
             await utils.embedDetails(ctx,
-            "Permissions Error!", 
-            "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Permissions Error")
+                                     "Permissions Error!",
+                                     "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Permissions Error")
         elif isinstance(error, CommandOnCooldown):
-            await utils.embedDetails(ctx, 
-            "Cooldown Error!", 
-            "Cooldown remaining: ``{.2f}``".format(error.retry_after),
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Cooldown Error")
+            await utils.embedDetails(ctx,
+                                     "Cooldown Error!",
+                                     "Cooldown remaining: ``{.2f}``".format(error.retry_after),
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Cooldown Error")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def unmute(self, ctx, member: discord.Member = None):
-        pass
+        if not member:
+            pass
+        else:
+            role = discord.utils.get(ctx.guild.roles, name="Muted")
+            await member.remove_role(role)
 
     # Error Handling for unmuting users
     @unmute.error
     async def unmute_error(self, ctx, error):
         if isinstance(error, MissingPermissions):
             await utils.embedDetails(ctx,
-            "Permissions Error!", 
-            "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Permissions Error")
+                                     "Permissions Error!",
+                                     "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Permissions Error")
         elif isinstance(error, CommandOnCooldown):
-            await utils.embedDetails(ctx, 
-            "Cooldown Error!", 
-            "Cooldown remaining: ``{.2f}``".format(error.retry_after),
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Cooldown Error")
+            await utils.embedDetails(ctx,
+                                     "Cooldown Error!",
+                                     "Cooldown remaining: ``{.2f}``".format(error.retry_after),
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Cooldown Error")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -180,20 +192,20 @@ class ModCommands(commands.Cog):
     async def add_role_error(self, ctx, error):
         if isinstance(error, MissingPermissions):
             await utils.embedDetails(ctx,
-            "Permissions Error!", 
-            "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Permissions Error")
+                                     "Permissions Error!",
+                                     "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Permissions Error")
         elif isinstance(error, CommandOnCooldown):
-            await utils.embedDetails(ctx, 
-            "Cooldown Error!", 
-            "Cooldown remaining: ``{.2f}``".format(error.retry_after),
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Cooldown Error")
+            await utils.embedDetails(ctx,
+                                     "Cooldown Error!",
+                                     "Cooldown remaining: ``{.2f}``".format(error.retry_after),
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Cooldown Error")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -212,20 +224,20 @@ class ModCommands(commands.Cog):
     async def remove_role_error(self, ctx, error):
         if isinstance(error, MissingPermissions):
             await utils.embedDetails(ctx,
-            "Permissions Error!", 
-            "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Permissions Error")
+                                     "Permissions Error!",
+                                     "Required Permissions: ``MESSAGE_MANAGE`` or ``ADMINISTRATOR``",
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Permissions Error")
         elif isinstance(error, CommandOnCooldown):
-            await utils.embedDetails(ctx, 
-            "Cooldown Error!", 
-            "Cooldown remaining: ``{.2f}``".format(error.retry_after),
-            Color.gold(),
-            ctx.guild.icon_url,
-            datetime.utcnow(),
-            "WockyFX Bot - Cooldown Error")
+            await utils.embedDetails(ctx,
+                                     "Cooldown Error!",
+                                     "Cooldown remaining: ``{.2f}``".format(error.retry_after),
+                                     Color.gold(),
+                                     ctx.guild.icon_url,
+                                     datetime.utcnow(),
+                                     "WockyFX Bot - Cooldown Error")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
@@ -234,7 +246,7 @@ class ModCommands(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name="Member")
         await ctx.channel.set_permissions(role, send_messages=False)
         await ctx.send("{} ***is now in lockdown.***".format(ctx.channel.mention))
-        
+
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def unlock(self, ctx):
@@ -258,8 +270,15 @@ class ModCommands(commands.Cog):
     @commands.command()
     async def edit_user(self, ctx, member: discord.Member):
         pass
-            
 
+    @commands.command()
+    @commands.has_any_role("CEO", "Co-Founder", "•")
+    async def create_task(self, ctx, member: discord.Member, task_name, task_desc, file_path):
+        await ctx.message.delete()
+        await ctx.send("{} please make sure you complete the task listed below!".format(member.mention))
+        await utils.task_embed(ctx, "\n======\n**New Task**\n======\n", "**{}**\n\n{}\n\n``{}``".format(task_name.replace("_", " "), task_desc.replace("_", " "), file_path), Color.gold(),
+                               ctx.guild.icon_url, datetime.utcnow(),
+                               "WockyFX - Task set by: {}".format(ctx.author.name))
 
 
 def setup(bot):
