@@ -61,48 +61,63 @@ async def member_join_leave(member, channel, title, desc, color, guild_icon, tim
     await log_channel.send(embed=embed)
 
 
-async def create_table(ctx):
-    conn = sqlite3.connect("db/users.db")
-    if conn:
-        print("Connected to Database Successfully!")
+# async def create_table(ctx):
+#     conn = sqlite3.connect("db/users.db")
+#     if conn:
+#         print("Connected to Database Successfully!")
+#
+#     conn.execute('''
+#         CREATE TABLE USERS
+#         (USERNAME CHAR(50) NOT NULL,
+#         PASSWORD CHAR(50) NOT NULL,
+#         EMAIL CHAR(50) NOT NULL,
+#         USERID CHAR(50) NOT NULL);''')
+#
+#     conn.close()
+#
+#     print("DB created!")
+#     await ctx.send("DB Create Successfully!")
 
-    conn.execute('''
-        CREATE TABLE USERS
-        (USERNAME CHAR(50) NOT NULL,
-        PASSWORD CHAR(50) NOT NULL,
-        EMAIL CHAR(50) NOT NULL,
-        USERID CHAR(50) NOT NULL);''')
 
+async def create_eco_table():
+    conn = sqlite3.connect("db/eco_users.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE ECO_USERS(
+    USERNAME TEXT,
+    BALANCE INTEGER,
+    USERID INTEGER NOT NULL
+    );
+    """)
+    conn.commit()
     conn.close()
 
-    print("DB created!")
-    await ctx.send("DB Create Successfully!")
 
-
-def create_user(username, user_id):
+async def create_task_user(ctx, username, user_id):
     task = "INSERT INTO USERS (USERNAME, USERID) VALUES (?,?)"
     conn = sqlite3.connect("db/task_users.db")
     conn.execute(task, (username, user_id))
 
     conn.commit()
-    print("User added to DB!")
+    await ctx.send("User added to DB!")
     conn.close()
 
 
-def delete_user(username, user_id):
+async def delete_user(ctx, username, user_id):
     task = "DELETE * WHERE USERNAME = ? AND USERID = ?"
     conn = sqlite3.connect("db/task_users.db")
     conn.execute(task, (username, user_id))
     conn.commit()
-    print("User deleted from DB!")
+    await ctx.send("User deleted from DB!")
     conn.close()
 
 
-def update_user(username, user_id):
+async def update_user(ctx, username, user_id):
     # TODO: Edit User Sqlite Syntax
     task = ""
     conn = sqlite3.connect("db/task_users.db")
     conn.execute(task, (username, user_id))
     conn.commit()
-    print("User edited in DB!")
+    await ctx.send("User edited in DB!")
     conn.close()

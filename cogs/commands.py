@@ -1,22 +1,27 @@
-from discord.ext import commands
-import discord
-from . import utils
-from discord import Color
-from datetime import datetime
-import re
 import json
 import urllib.request
+from datetime import datetime
+
+import discord
+from discord_slash import cog_ext, SlashContext, SlashCommand
+from discord import Color
+from discord.ext import commands
+
+from . import utils
 
 
 class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def help(self, ctx):
+    @cog_ext.cog_slash(name="Help", description="Displays the Help Command")
+    async def help(self, ctx: SlashContext):
         await utils.embedDetails(ctx,
                                  "WockyFX Help Menu",
-                                 "```====== User Commands ======\n.help: Displays this menu\n.info: Displays general info\n.server_info: Displays information on the server\n.userinfo: Displays info on a mentioned user\n.gp: Ghost Ping a mentioned role a specific amount of times LOL```",
+                                 "```====== User Commands ======\n.help: Displays this menu\n.info: Displays general "
+                                 "info\n.server_info: Displays information on the server\n.userinfo: Displays info on "
+                                 "a mentioned user\n.gp: Ghost Ping a mentioned role a specific amount of times "
+                                 "LOL```",
                                  Color.gold(),
                                  ctx.guild.icon_url,
                                  datetime.utcnow(),

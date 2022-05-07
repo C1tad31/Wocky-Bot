@@ -56,6 +56,35 @@ class Users(commands.Cog):
     async def edit_db_user(self, ctx, username, password, email, member: discord.Member = None):
         pass
 
+    # task database commands
+
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def add_user(self, ctx, member: discord.Member):
+        # Creates a database with the required tables
+        # utils.create_table()
+        utils.create_user(member.name, member.id)
+        await ctx.send("{}, has been added to the database!".format(member.mention))
+
+    @commands.command()
+    async def remove_user(self, ctx, member: discord.Member):
+        pass
+
+    @commands.command()
+    async def edit_user(self, ctx, member: discord.Member):
+        pass
+
+    @commands.command()
+    @commands.has_any_role("CEO", "Co-Founder", "•")
+    async def create_task(self, ctx, member: discord.Member, task_name, task_desc, file_path):
+        await ctx.message.delete()
+        await ctx.send("{} please make sure you complete the task listed below!".format(member.mention))
+        await utils.task_embed(ctx, "\n======\n**New Task**\n======\n",
+                               "**{}**\n\n{}\n\n``{}``".format(task_name.replace("_", " "), task_desc.replace("_", " "),
+                                                               file_path), Color.gold(),
+                               ctx.guild.icon_url, datetime.utcnow(),
+                               "WockyFX - Task set by: {}".format(ctx.author.name))
+
 
 def setup(bot):
     bot.add_cog(Users(bot))

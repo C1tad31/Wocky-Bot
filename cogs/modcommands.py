@@ -28,7 +28,8 @@ class ModCommands(commands.Cog):
                 await ctx.channel.purge(limit=int(amount))
                 await utils.embedDetails(ctx,
                                          "Messages Cleared!",
-                                         "{} messages have been cleared from the chat by: {}".format(amount, ctx.author.mention),
+                                         "{} messages have been cleared from the chat by: {}".format(amount,
+                                                                                                     ctx.author.mention),
                                          Color.gold(),
                                          ctx.guild.icon_url,
                                          datetime.utcnow(),
@@ -247,6 +248,11 @@ class ModCommands(commands.Cog):
                                      "WockyFX Bot - Cooldown Error", 10)
 
     @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def warn(self, ctx, member: discord.Member = None, *, reason):
+        pass
+
+    @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def lockdown(self, ctx):
         await ctx.message.delete()
@@ -261,31 +267,6 @@ class ModCommands(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name="Member")
         await ctx.channel.set_permissions(role, send_messages=True)
         await ctx.send("{} ***has been unlocked.***".format(ctx.channel.mention))
-
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def add_user(self, ctx, member: discord.Member):
-        # Creates a database with the required tables
-        # utils.create_table()
-        utils.create_user(member.name, member.id)
-        await ctx.send("{}, has been added to the database!".format(member.mention))
-
-    @commands.command()
-    async def remove_user(self, ctx, member: discord.Member):
-        pass
-
-    @commands.command()
-    async def edit_user(self, ctx, member: discord.Member):
-        pass
-
-    @commands.command()
-    @commands.has_any_role("CEO", "Co-Founder", "•")
-    async def create_task(self, ctx, member: discord.Member, task_name, task_desc, file_path):
-        await ctx.message.delete()
-        await ctx.send("{} please make sure you complete the task listed below!".format(member.mention))
-        await utils.task_embed(ctx, "\n======\n**New Task**\n======\n", "**{}**\n\n{}\n\n``{}``".format(task_name.replace("_", " "), task_desc.replace("_", " "), file_path), Color.gold(),
-                               ctx.guild.icon_url, datetime.utcnow(),
-                               "WockyFX - Task set by: {}".format(ctx.author.name))
 
 
 def setup(bot):
