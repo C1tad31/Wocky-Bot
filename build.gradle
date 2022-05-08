@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group 'cc.wocky.discordbot'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'net.dv8tion:JDA:5.0.0-alpha.11'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    implementation 'org.json:json:20220320'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
