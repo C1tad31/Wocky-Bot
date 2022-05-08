@@ -39,6 +39,7 @@ public class Bot {
         }
     };
     private static String token;
+    // private static final String secretKey = "ssshhhhhhhhhhhhh!!!!";
     public static void main(String[] args) throws IOException, LoginException, InterruptedException {
         File file = new File("/home/citadel/Desktop/WockyBot/src/main/java/cc/wocky/discordbot/config/config.txt");
         BufferedReader reader = new BufferedReader(new FileReader(file));
