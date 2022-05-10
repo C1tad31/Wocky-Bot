@@ -34,7 +34,8 @@ public class WebsiteCommands extends ListenerAdapter {
         }
     }
 
-    public void onButtonClick(ButtonInteractionEvent event) {
+    @Override
+    public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
         if (event.getComponentId().equals("website")) {
             event.reply("Thank you for your interest in Wocky Services for more information please contact on of the following people:\n<@961071033123741727> - ``Owner / Founder / Project Director / Developer``\n<@960758452232286208> - ``Co-Founder / Project Director / Developer``\n<@950157500706074625> - ``Leader / Project Director/ Developer``").queue();
         }
