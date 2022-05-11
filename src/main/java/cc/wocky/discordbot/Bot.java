@@ -1,6 +1,7 @@
 package cc.wocky.discordbot;
 
 import cc.wocky.discordbot.commands.HelpCommand;
+import cc.wocky.discordbot.commands.ServerInfoCommand;
 import cc.wocky.discordbot.commands.SupportCommand;
 import cc.wocky.discordbot.commands.WebsiteCommands;
 import cc.wocky.discordbot.events.BotReady;
@@ -95,10 +96,14 @@ public class Bot {
 
             jda.addEventListener(new ChannelDeleteInterval());
             jda.upsertCommand("autodelete", "Deletes the channel on an interval of 12 hours").addOptions(
-            new OptionData(OptionType.CHANNEL, "channel", "channel to set AutoDelete on", true)).queue();
+                    new OptionData(OptionType.CHANNEL, "channel", "channel to set AutoDelete on", true)).queue();
 
             jda.addEventListener(new NukeCommand());
-            jda.upsertCommand("nuke", "Nukes a channel").queue();
+            jda.upsertCommand("nuke", "Nukes a channel").addOptions(
+                    new OptionData(OptionType.CHANNEL, "channel", "Choose a channel to nuke", true)).queue();
+
+            jda.addEventListener(new ServerInfoCommand());
+            jda.upsertCommand("serverinfo", "Displays server info on the current server").queue();
 
 
             alternateGameThread.start();

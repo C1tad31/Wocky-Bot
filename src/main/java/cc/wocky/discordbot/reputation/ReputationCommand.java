@@ -8,11 +8,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class ReputationCommand extends ListenerAdapter {
 
+    private ReputationService reputationService = new ReputationService();
+
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         Member member = event.getMember();
         if (event.getName().equals("rep")) {
-            Role role = event.getGuild().getRolesByName("Testing", true).get(0);
+            Role role = event.getGuild().getRolesByName("Verified", true).get(0);
             if (!member.getGuild().getRoles().contains(role)) {
                 event.reply("You cannot use this command because you arent a verifed user yet!").setEphemeral(true).queue();
             } else {
@@ -26,7 +28,6 @@ public class ReputationCommand extends ListenerAdapter {
                     event.reply("You cant only give 100 rep points per user per command use!").setEphemeral(true).queue();
                 } else {
                     // Logic Here
-                    event.reply("Command Coming Soon...").setEphemeral(true).queue();
                 }
             }
         }

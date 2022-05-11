@@ -14,7 +14,7 @@ public class MySQLService {
     public void createUser(Member member, String username, String password) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("url", "Citadel", "Haloreach1");
+            Connection connection = DriverManager.getConnection("url", "Citadel", "password");
             String query = "INSERT INTO users(username, password, user_id) VALUES(?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(0, username);
@@ -32,7 +32,7 @@ public class MySQLService {
     public void deleteUser(Member member, String username) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("url", "Citadel", "Haloreach1");
+            Connection connection = DriverManager.getConnection("url", "Citadel", "password");
             String query = "DELETE FROM users WHERE username=" + username;
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -49,7 +49,7 @@ public class MySQLService {
     // public void editUser(Member member, String username) {
     //     try {
     //         Class.forName("com.mysql.cj.jdbc.Driver");
-    //         Connection connection = DriverManager.getConnection("url", "Citadel", "Haloreach1");
+    //         Connection connection = DriverManager.getConnection("url", "Citadel", "password");
     //         String query = "INSERT INTO users(username, password, user_id) VALUES(?,?,?)";
     //         PreparedStatement preparedStatement = connection.prepareStatement(query);
     //         preparedStatement.setString(0, username);
